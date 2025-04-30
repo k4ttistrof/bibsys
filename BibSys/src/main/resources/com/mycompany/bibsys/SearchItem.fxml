@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibsys.SearchItemController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+        <Label alignment="CENTER" layoutX="142.0" layoutY="163.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+            <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="640.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Start">
+                  <items>
+                        <MenuItem fx:id="menuLogIn" mnemonicParsing="false" text="Logga in" />
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <GridPane layoutY="14.0" prefHeight="374.0" prefWidth="640.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="584.0" minWidth="10.0" prefWidth="113.20001220703125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="584.0" minWidth="10.0" prefWidth="461.79999999999995" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.20001220703125" minWidth="10.0" prefWidth="69.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="120.60001220703126" minHeight="10.0" prefHeight="75.40000228881836" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="120.60001220703126" minHeight="7.599999999999994" prefHeight="16.199997711181638" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="288.0000061035156" minHeight="10.0" prefHeight="32.199987792968756" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="288.0000061035156" minHeight="10.0" prefHeight="263.79998168945315" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="searchItemTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     <GridPane.margin>
+                        <Insets bottom="14.0" top="14.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label prefHeight="18.0" prefWidth="138.0" text="Search for item:">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Result:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+                  <TableView fx:id="searchResultsTable" prefHeight="218.0" prefWidth="461.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets bottom="8.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets bottom="14.0" />
+                     </GridPane.margin>
+                     <columns>
+                        <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
+                        <TableColumn fx:id="authorOrDirectorColumn" prefWidth="75.0" text="Author/Director" />
+                        <TableColumn fx:id="yearColumn" prefWidth="75.0" text="Year" />
+                        <TableColumn fx:id="isbnColumn" prefWidth="75.0" text="ISBN" />
+                        <TableColumn fx:id="genreColumn" prefWidth="75.0" text="Genre" />
+                        <TableColumn fx:id="availabilityColumn" prefWidth="75.0" text="Availability" />
+                     </columns>
+                  </TableView>
+                  <ChoiceBox fx:id="searchTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Button fx:id="searchItemButton" mnemonicParsing="false" text="Search" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
