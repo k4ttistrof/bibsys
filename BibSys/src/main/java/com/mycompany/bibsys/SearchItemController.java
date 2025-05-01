@@ -114,16 +114,27 @@ public class SearchItemController {
         }
     }
     
-    private void updateTableWithBooks(List<Book> books){
+   private void updateTableWithBooks(List<Book> books){
         ObservableList<SearchResultItem> bookResults = FXCollections.observableArrayList();
+        Set<String> addedBooks = new HashSet<>();
+        
         for (Book book : books){
-            for (BookCopies copy : book.getCopies()){
-               String availability = copy.isAvailable() ? "Available" : "On loan";
-               bookResults.add(new SearchResultItem(book.getTitle(), book.getAuthor(), book.getYear(), book.getIsbn(), availability));
+            if (!addedBooks.contains(book.getTitle())){
+                addedBooks.add(book.getTitle());
+                
+                boolean isAvailable = false; 
+                for (BookCopies copy : book.getCopies()){
+                    if (copy.isAvailable()){
+                        isAvailable = true; 
+                        break; //eg. borde man kanske kolla vidare om man vill veta hur många som är available
+                    }
+                }
+                
+                String availability = isAvailable ? "Available" : "On loan"; 
+                bookResults.add(new SearchResultItem(book.getTitle(), book.getAuthor(), book.getYear(), book.getIsbn(), availability));
             }
-            
         }
-        searchResultsTable.setItems(bookResults); 
+        searchResultsTable.setItems(bookResults);
     }
     
     private void updateTableWithDvd(List<DVD> dvds){
