@@ -17,7 +17,7 @@ import java.sql.*;
 public class DVDDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/bbd";
     private static final String USER = "root";
-    private static final String PASSWORD = "DITTLÖSEN"; //ändra till rätt lösenord 
+    private static final String PASSWORD = "#Katot99"; //ändra till rätt lösenord 
     
     public static List<DVD> searchDVDs(String query){
         List<DVD> dvds = new ArrayList<>(); 
@@ -45,8 +45,9 @@ public class DVDDAO {
                     String director = rs.getString("director");
                     int year = rs.getInt("releaseYear");
                     String genre = rs.getString("genre");
+                    String placement = rs.getString("placement");
                 
-                    dvd = new DVD(dvdNo, title, director, year, genre);
+                    dvd = new DVD(dvdNo, title, director, year, genre, placement);
                     dvdMap.put(dvdNo, dvd);
                 }
                 

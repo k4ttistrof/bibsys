@@ -17,7 +17,7 @@ import java.sql.*;
 public class BookDAO { //DAO = Data Access Object
     private static final String URL = "jdbc:mysql://localhost:3306/bbd";
     private static final String USER = "root";
-    private static final String PASSWORD ="DITTLÖSEN"; //ändra till rätt lösenord 
+    private static final String PASSWORD ="#Katot99"; //ändra till rätt lösenord 
     
     public static List<Book> searchBooks(String query){
         List<Book> books = new ArrayList<>();
@@ -54,10 +54,11 @@ public class BookDAO { //DAO = Data Access Object
                 String author = rs.getString("author");
                 String publisher = rs.getString("publisher"); 
                 int year = rs.getInt("publishingYear");
-                int category = rs.getInt("bookCategory"); 
+                int category = rs.getInt("bookCategory");
+                String placement = rs.getString("placement");
    
                 
-                book = new Book(isbn, title, author, publisher, year, category);
+                book = new Book(isbn, title, author, publisher, year, category, placement);
                 bookMap.put(isbn, book);
                 }
                 int copyId = rs.getInt("bookCopyID");

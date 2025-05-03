@@ -17,14 +17,16 @@ public class DVD {
     private String director; 
     private int year; 
     private String genre; 
+    private String placement; 
     private List<DVDCopies> copies = new ArrayList<>();
     
-    public DVD(int dvdNo, String title, String director, int year, String genre){
+    public DVD(int dvdNo, String title, String director, int year, String genre, String placement){
         this.dvdNo = dvdNo; 
         this.title = title; 
         this.director = director; 
         this.year = year; 
         this.genre = genre; 
+        this.placement = placement; 
     }
     
     public int getDvdNo(){
@@ -41,6 +43,9 @@ public class DVD {
     }
     public String getGenre(){
         return genre; 
+    }
+    public String getPlacement(){
+        return placement; 
     }
     public void addCopy(DVDCopies copy){
         copies.add(copy);

@@ -1,3 +1,4 @@
+com\mycompany\bibsys\BookDetailsController.class
 com\mycompany\bibsys\entity\DVDCopies.class
 com\mycompany\bibsys\SearchItemController.class
 com\mycompany\bibsys\entity\DVD.class

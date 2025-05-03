@@ -12,27 +12,35 @@ package com.mycompany.bibsys;
 public class SearchResultItem {
     private String title;
     private String authorOrDirector;
+    private String publisher; //null för dvder
     private Integer year;
     private Long isbn; // Kan vara null för DVD
     private String genre; //Kan vara null för böcker
     private String availability; 
+    private String placement;
 
-    public SearchResultItem(String title, String authorOrDirector, int year, Long isbn, String availability) {
+    //böcker
+    public SearchResultItem(String title, String author, String publisher, int year, Long isbn, String availability, String placement) {
         this.title = title;
-        this.authorOrDirector = authorOrDirector;
+        this.authorOrDirector = author;
+        this.publisher = publisher;
         this.year = year;
         this.isbn = isbn;
         this.genre = null;
         this.availability = availability;
+        this.placement = placement;
     }
     
-    public SearchResultItem(String title, String director, int year, String genre, String availability) {
+    //dvder
+    public SearchResultItem(String title, String director, int year, String genre, String availability, String placement) {
         this.title = title;
         this.authorOrDirector = director;
+        this.publisher = null; //ingen publisher
         this.year = year;
-        this.isbn = null; // Visa inget för ISBN
+        this.isbn = null; // inget isbn
         this.genre = genre;
         this.availability = availability;
+        this.placement = placement;
     }
 
     public String getTitle() {
@@ -40,6 +48,9 @@ public class SearchResultItem {
     }
     public String getAuthorOrDirector() {
         return authorOrDirector;
+    }
+    public String getPublisher(){
+        return publisher;
     }
     public int getYear() {
         return year;
@@ -53,5 +64,8 @@ public class SearchResultItem {
     }
     public String getAvailability(){
         return availability; 
+    }
+    public String getPlacement(){
+        return placement;
     }
 }

@@ -9,26 +9,22 @@ package com.mycompany.bibsys;
  * @author katay
  */
 
-
 import com.mycompany.bibsys.database.BookDAO;
 import com.mycompany.bibsys.database.DVDDAO;
 import com.mycompany.bibsys.entity.Book;
 import com.mycompany.bibsys.entity.BookCopies;
 import com.mycompany.bibsys.entity.DVD;
 import com.mycompany.bibsys.entity.DVDCopies;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.io.IOException;
+import java.util.*;
+import javafx.collections.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class SearchItemController {
 
@@ -64,6 +60,8 @@ public class SearchItemController {
     
     @FXML
     private TableColumn<SearchResultItem, String> availabilityColumn;
+    
+    private Parent mainRoot; 
 
     
     public void initialize(){
@@ -72,8 +70,20 @@ public class SearchItemController {
         
         searchItemButton.setOnAction(e -> searchItems());
         setBookColumns();
+        
+        searchResultsTable.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 1){
+                SearchResultItem selectedItem = searchResultsTable.getSelectionModel().getSelectedItem();
+                if (selectedItem != null && "Book".equalsIgnoreCase(searchTypeChoiceBox.getValue())){
+                    openDetailsPage(selectedItem);
+                }
+            }
+        });
     }
     
+    public void setMainRoot(Parent root){
+        this.mainRoot = root; 
+    }
     private void setBookColumns(){
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorOrDirectorColumn.setCellValueFactory(new PropertyValueFactory<>("authorOrDirector"));
@@ -102,19 +112,31 @@ public class SearchItemController {
         String searchQuery = searchItemTextField.getText();
         String searchType = searchTypeChoiceBox.getValue(); 
         
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); 
+        alert.setTitle("Search Results");
+        alert.setHeaderText(null);
+        alert.setContentText("No matches found for: " + searchQuery);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        
         if ("Book".equals(searchType)){
             List<Book> books = BookDAO.searchBooks(searchQuery);
+            if (books.isEmpty()){
+                alert.showAndWait();
+            }
             updateTableWithBooks(books);
             setBookColumns();
         }
         else if ("DVD".equalsIgnoreCase(searchType)){
             List<DVD> dvds = DVDDAO.searchDVDs(searchQuery); 
+            if (dvds.isEmpty()){
+                alert.showAndWait();
+            }
             updateTableWithDvd(dvds);
             setDvdColumns();     
         }
     }
     
-   private void updateTableWithBooks(List<Book> books){
+    private void updateTableWithBooks(List<Book> books){
         ObservableList<SearchResultItem> bookResults = FXCollections.observableArrayList();
         Set<String> addedBooks = new HashSet<>();
         
@@ -131,22 +153,55 @@ public class SearchItemController {
                 }
                 
                 String availability = isAvailable ? "Available" : "On loan"; 
-                bookResults.add(new SearchResultItem(book.getTitle(), book.getAuthor(), book.getYear(), book.getIsbn(), availability));
+                bookResults.add(new SearchResultItem(book.getTitle(), book.getAuthor(), book.getPublisher(), book.getYear(), book.getIsbn(), availability, book.getPlacement()));
             }
         }
         searchResultsTable.setItems(bookResults);
     }
     
     private void updateTableWithDvd(List<DVD> dvds){
-        ObservableList<SearchResultItem> dvdResults = FXCollections.observableArrayList(); 
+        ObservableList<SearchResultItem> dvdResults = FXCollections.observableArrayList();
+        Set<String> addedDvds = new HashSet<>();
+        
         for (DVD dvd : dvds){
-            for(DVDCopies copy : dvd.getCopies()){
-                String availability = copy.isAvailable() ? "Available" : "On loan.";
-                dvdResults.add(new SearchResultItem(dvd.getTitle(), dvd.getDirector(), dvd.getYear(), dvd.getGenre(), availability));
+            if (!addedDvds.contains(dvd.getTitle())){
+                addedDvds.add(dvd.getTitle());
+                
+                boolean isAvailable = false; 
+                for (DVDCopies copy : dvd.getCopies()){
+                    if (copy.isAvailable()){
+                        isAvailable = true; 
+                        break; //eg. borde man kanske kolla vidare om man vill veta hur många som är available
+                    }
+                }
+                
+                String availability = isAvailable ? "Available" : "On loan"; 
+                dvdResults.add(new SearchResultItem(dvd.getTitle(), dvd.getDirector(), dvd.getYear(), dvd.getGenre(), availability, dvd.getPlacement()));
             }
         }
         searchResultsTable.setItems(dvdResults);
     }
-   
-
+    
+     private void openDetailsPage(SearchResultItem selectedItem){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("BookDetails.fxml"));
+            Parent detailsRoot = loader.load();
+            
+            BookDetailsController controller = loader.getController();
+            controller.setBookDetails(selectedItem);
+            
+            controller.setMainRoot(mainRoot);
+            controller.setMainController(this);
+            
+            if (mainRoot == null){
+                mainRoot = searchItemButton.getScene().getRoot();
+            }
+            
+            searchItemButton.getScene().setRoot(detailsRoot);
+            
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 }
