@@ -72,10 +72,13 @@ public class SearchItemController {
         setBookColumns();
         
         searchResultsTable.setOnMouseClicked(event -> {
-            if(event.getClickCount() == 1){
+            if(event.getClickCount() == 2){
                 SearchResultItem selectedItem = searchResultsTable.getSelectionModel().getSelectedItem();
                 if (selectedItem != null && "Book".equalsIgnoreCase(searchTypeChoiceBox.getValue())){
-                    openDetailsPage(selectedItem);
+                    openBookDetailsPage(selectedItem);
+                }
+                else if (selectedItem != null && "DVD".equalsIgnoreCase(searchTypeChoiceBox.getValue())){
+                    openDvdDetailsPage(selectedItem);
                 }
             }
         });
@@ -182,7 +185,7 @@ public class SearchItemController {
         searchResultsTable.setItems(dvdResults);
     }
     
-     private void openDetailsPage(SearchResultItem selectedItem){
+     private void openBookDetailsPage(SearchResultItem selectedItem){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("BookDetails.fxml"));
             Parent detailsRoot = loader.load();
@@ -204,4 +207,28 @@ public class SearchItemController {
             e.printStackTrace();
         }
     }
+     
+    private void openDvdDetailsPage(SearchResultItem selectedItem){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DVDDetails.fxml"));
+            Parent detailsRoot = loader.load();
+            
+            DvdDetailsController controller = loader.getController();
+            controller.setDvdDetails(selectedItem);
+            
+            controller.setMainRoot(mainRoot);
+            controller.setMainController(this);
+            
+            if (mainRoot == null){
+                mainRoot = searchItemButton.getScene().getRoot();
+            }
+            
+            searchItemButton.getScene().setRoot(detailsRoot);
+            
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }

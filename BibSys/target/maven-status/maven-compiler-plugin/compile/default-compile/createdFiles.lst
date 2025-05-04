@@ -11,5 +11,6 @@ com\mycompany\bibsys\entity\Book.class
 com\mycompany\bibsys\PrimaryController.class
 com\mycompany\bibsys\database\DVDDAO.class
 com\mycompany\bibsys\entity\User.class
+com\mycompany\bibsys\DvdDetailsController.class
 com\mycompany\bibsys\App.class
 com\mycompany\bibsys\database\BookDAO.class
