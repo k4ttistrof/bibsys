@@ -62,7 +62,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Start">
                   <items>
-                        <MenuItem fx:id="menuLogIn" mnemonicParsing="false" text="Logga in" />
+                        <MenuItem fx:id="menuLogIn" mnemonicParsing="false" onAction="#menuLogInPressed" text="Log In" />
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>

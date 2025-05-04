@@ -72,8 +72,8 @@ public class BookDetailsController {
         borrowItemButton.setDisable(!"Available".equalsIgnoreCase(item.getAvailability()));
     }
     
-    public void setMainRoot(Parent mainRoot){
-        this.mainRoot = mainRoot; 
+    public void setMainRoot(Parent root){
+        this.mainRoot = root; 
     }
     
     public void setMainController(SearchItemController controller){

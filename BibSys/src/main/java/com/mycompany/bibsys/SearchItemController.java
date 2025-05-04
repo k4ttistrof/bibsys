@@ -18,8 +18,10 @@ import com.mycompany.bibsys.entity.DVDCopies;
 import java.io.IOException;
 import java.util.*;
 import javafx.collections.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -39,7 +41,7 @@ public class SearchItemController {
 
     @FXML
     private TableView<SearchResultItem> searchResultsTable;
-
+    private Parent mainRoot; 
     @FXML
     private ChoiceBox<String> searchTypeChoiceBox;
 
@@ -61,9 +63,29 @@ public class SearchItemController {
     @FXML
     private TableColumn<SearchResultItem, String> availabilityColumn;
     
-    private Parent mainRoot; 
+     @FXML
+    void menuLogInPressed(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPage.fxml"));
+            Parent loginRoot = loader.load();
+            
+            LogInPageController loginController = loader.getController();
+            loginController.setMainRoot(mainRoot);
+            
 
+            Stage stage = (Stage)((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+            stage.setScene(new Scene(loginRoot));
+            stage.setTitle("Log In");
+            stage.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
     
+    
+
     public void initialize(){
         searchTypeChoiceBox.getItems().addAll("Book", "DVD");
         searchTypeChoiceBox.setValue("Book");
@@ -185,22 +207,20 @@ public class SearchItemController {
         searchResultsTable.setItems(dvdResults);
     }
     
-     private void openBookDetailsPage(SearchResultItem selectedItem){
+    private void openBookDetailsPage(SearchResultItem selectedItem){
         try{
+            if(mainRoot == null){
+                mainRoot = searchResultsTable.getScene().getRoot();
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("BookDetails.fxml"));
-            Parent detailsRoot = loader.load();
+            Parent bookDetailsRoot = loader.load();
             
             BookDetailsController controller = loader.getController();
-            controller.setBookDetails(selectedItem);
-            
             controller.setMainRoot(mainRoot);
+            controller.setBookDetails(selectedItem);
             controller.setMainController(this);
-            
-            if (mainRoot == null){
-                mainRoot = searchItemButton.getScene().getRoot();
-            }
-            
-            searchItemButton.getScene().setRoot(detailsRoot);
+
+            searchItemButton.getScene().setRoot(bookDetailsRoot);
             
         }
         catch(IOException e){
@@ -210,25 +230,22 @@ public class SearchItemController {
      
     private void openDvdDetailsPage(SearchResultItem selectedItem){
         try{
+            if(mainRoot == null){
+                mainRoot = searchResultsTable.getScene().getRoot();
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("DVDDetails.fxml"));
-            Parent detailsRoot = loader.load();
+            Parent dvdDetailsRoot = loader.load();
             
             DvdDetailsController controller = loader.getController();
             controller.setDvdDetails(selectedItem);
-            
             controller.setMainRoot(mainRoot);
             controller.setMainController(this);
             
-            if (mainRoot == null){
-                mainRoot = searchItemButton.getScene().getRoot();
-            }
-            
-            searchItemButton.getScene().setRoot(detailsRoot);
+            searchItemButton.getScene().setRoot(dvdDetailsRoot);
             
         }
         catch(IOException e){
             e.printStackTrace();
         }
     }
-
 }
