@@ -157,7 +157,7 @@ public class AddItemsController {
             return;
         }
         
-        try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "#Katot99")){
+        try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "")){
             conn.setAutoCommit(false);
             
             String insertBookSQL = "INSERT INTO book (ISBN, title, author, publisher, publishingYear, bookCategory, placement) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -224,7 +224,7 @@ public class AddItemsController {
             showAlert(Alert.AlertType.ERROR, "Input Error", "Release Year and number of copies must be numbers!");
             return;}
         
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "#Katot99")){
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "")){
             conn.setAutoCommit(false);
             
             String insertDvdSQL = "INSERT INTO dvd (title, director, releaseYear, genre, loanTime, placement) VALUES (?, ?, ?, ?, ?, ?)"; 

@@ -151,7 +151,4 @@ public class UserLoggedInPageController {
             deleteItemButton.setManaged(false);
         }
     }
-
-   
-
 }
