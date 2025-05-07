@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibsys.AddItemsController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <GridPane layoutX="14.0" layoutY="36.0" prefHeight="50.0" prefWidth="528.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.20001220703125" minWidth="10.0" prefWidth="96.80001220703124" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="432.79999999999995" minWidth="10.0" prefWidth="405.5999877929687" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Item Type:" GridPane.halignment="LEFT">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ChoiceBox fx:id="searchTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <StackPane layoutX="18.0" layoutY="83.0" prefHeight="289.0" prefWidth="596.0">
+               <children>
+                  <GridPane fx:id="bookForm" prefHeight="293.0" prefWidth="595.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.20001220703125" minWidth="10.0" prefWidth="21.400006103515626" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.20001220703125" minWidth="10.0" prefWidth="116.79999389648438" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="466.3999786376953" minWidth="10.0" prefWidth="459.20000610351565" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Author: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Publisher:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Publishing Year:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Title:" GridPane.columnIndex="1" />
+                        <Label text="Book Category: " GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Placement:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Has Reference Copy:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <CheckBox fx:id="isReferenceCopyCheckBox" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <TextField fx:id="bookTitleTextField" GridPane.columnIndex="2" />
+                        <TextField fx:id="authorTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="publisherTextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="publishingYearTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="bookPlacementTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Label fx:id="bcInfoIcon" text="ⓘ" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Label fx:id="ircInfoIcon" text="ⓘ" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Label text="ISBN" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="isbnTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBookButtonPressed" text="Add Book" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                        <Label text="Number of Copies: " GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="bnrOfCopiesTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <ChoiceBox fx:id="categoryChoiceBox" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="dvdForm" prefHeight="297.0" prefWidth="596.0" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.20001220703125" minWidth="10.0" prefWidth="110.79997253417969" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="517.2000274658203" minWidth="10.0" prefWidth="485.2000274658203" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Title:" />
+                        <Label text="Director:" GridPane.rowIndex="1" />
+                        <Label text="Release Year:" GridPane.rowIndex="2" />
+                        <Label text="Genre:" GridPane.rowIndex="3" />
+                        <Label text="Placement:" GridPane.rowIndex="4" />
+                        <Label text="Number of Copies:" GridPane.rowIndex="5" />
+                        <ChoiceBox fx:id="genreChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="dvdTitleTextField" GridPane.columnIndex="1" />
+                        <TextField fx:id="directorTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="releaseYearTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="78.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="dplacementTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="78.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="dnrOfCopiesTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="78.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button fx:id="addDvdButton" mnemonicParsing="false" onAction="#addDvdButtonPressed" text="Add DVD" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

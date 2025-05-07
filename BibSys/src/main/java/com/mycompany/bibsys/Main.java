@@ -24,7 +24,7 @@ public class Main extends Application{
         controller.setMainRoot(root);
         
         Scene scene = new Scene(root); 
-        stage.setTitle("Bibliotekssystem");
+        stage.setTitle("Library System");
         stage.setScene(scene);
         stage.show();
     }

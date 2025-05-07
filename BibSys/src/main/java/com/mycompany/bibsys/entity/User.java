@@ -21,12 +21,15 @@ public class User {
     private String lastName; 
     private String streetName; 
     private String city; 
-    private int postCode;
-    private List<Copies> activeLoans;
+    private String postCode;
+    private int activeLoans;
+    private String role;
+    private String password;
+    private List<Copies> loans; //bör nog ändras. loans ska väl innehålla lista på alla Lån. 
     
     public User(int userId, int userCategory, String email, String firstName, 
                 String lastName, String streetName, String city, 
-                int postCode) {
+                String postCode, int activeLoans, String role, String password) {
         this.userId = userId;
         this.userCategory = userCategory;
         this.email = email;
@@ -35,7 +38,10 @@ public class User {
         this.streetName = streetName;
         this.city = city;
         this.postCode = postCode;
-        this.activeLoans = new ArrayList<>();
+        this.activeLoans = activeLoans;
+        this.role = role; 
+        this.password = password; 
+        this.loans = new ArrayList<>();
     }
     
     public int getUserId() {
@@ -47,17 +53,43 @@ public class User {
     public String getLastName() {
         return lastName;
     }
+    public String getEmail(){
+        return email; 
+    }
+    public int getActiveLoans(){
+        return activeLoans;
+    }
     public int getUserCategory() {
         return userCategory;
     }
-    public List<Copies> getActiveLoans() {
-        return activeLoans;
+    
+    public String getCategoryDesc() {
+        if (userCategory == 1){
+            if ("staff".equalsIgnoreCase(role)){
+                return " = Staff. You can borrow up to 20 items.";
+            }
+            else{
+                return " = Researcher. You can borrow up to 20 items."; 
+            } 
+        } else if (userCategory == 2){
+            return " = Teacher. You can borrow up to 10 items.";
+        } else if (userCategory == 1){
+            return " = Student. You can borrow up to 5 items.";
+        } else{
+            return "Unknown category.";
+        }
     }
-    public void addActiveLoan(BookCopies copy) {
-        activeLoans.add(copy);
+    public String getRole(){
+        return role; 
     }
-    public void removeActiveLoan(BookCopies copy) {
-        activeLoans.remove(copy);
+    public List<Copies> getLoans() {
+        return loans;
+    }
+    public void addLoan(BookCopies copy) {
+        loans.add(copy);
+    }
+    public void removeLoan(BookCopies copy) {
+        loans.remove(copy);
     }
     
     @Override 

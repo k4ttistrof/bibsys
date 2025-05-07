@@ -66,6 +66,18 @@ public class SearchItemController {
      @FXML
     void menuLogInPressed(ActionEvent event) {
         try {
+            if(Session.getCurrentUser() != null){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("UserLoggedInPage.fxml"));
+                Parent userLoggedInRoot = loader.load();
+
+                UserLoggedInPageController controller = loader.getController();
+                controller.setUser(Session.getCurrentUser());
+                Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+                stage.setScene(new Scene(userLoggedInRoot));
+                stage.setTitle("Personal User Page");
+                stage.show();
+            }
+            else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPage.fxml"));
             Parent loginRoot = loader.load();
             
@@ -77,16 +89,16 @@ public class SearchItemController {
             stage.setScene(new Scene(loginRoot));
             stage.setTitle("Log In");
             stage.show();
+            }
         }
         catch (IOException e){
             e.printStackTrace();
         }
-
     }
-    
     
 
     public void initialize(){
+        updateMenuForUser();
         searchTypeChoiceBox.getItems().addAll("Book", "DVD");
         searchTypeChoiceBox.setValue("Book");
         
@@ -106,6 +118,16 @@ public class SearchItemController {
         });
     }
     
+    private void updateMenuForUser(){
+        if (Session.getCurrentUser() != null){
+            menuLogIn.setText("My Page");
+            menuLogIn.setOnAction(event -> menuLogInPressed(event));
+        }
+        else{
+            menuLogIn.setText("Log In");
+            menuLogIn.setOnAction(event -> menuLogInPressed(event));
+        }
+    }
     public void setMainRoot(Parent root){
         this.mainRoot = root; 
     }
