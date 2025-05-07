@@ -17,7 +17,7 @@ import java.sql.*;
 public class DVDDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/bbd";
     private static final String USER = "root";
-    private static final String PASSWORD = ""; //ändra till rätt lösenord 
+    private static final String PASSWORD = "#Katot99"; //ändra till rätt lösenord 
     
     public static List<DVD> searchDVDs(String query){
         List<DVD> dvds = new ArrayList<>(); 
@@ -35,41 +35,37 @@ public class DVDDAO {
             stmt.setString(1, searchPattern); 
             stmt.setString(2, searchPattern); 
             
-            ResultSet rs = stmt.executeQuery(); 
-            while (rs.next()){
-                int dvdNo = rs.getInt("dvdNo");
+            try (ResultSet rs = stmt.executeQuery()){ 
+                while (rs.next()){
+                    int dvdNo = rs.getInt("dvdNo");
                 
-                DVD dvd = dvdMap.get(dvdNo);
-                if (dvd == null){
-                    String title = rs.getString("title");
-                    String director = rs.getString("director");
-                    int year = rs.getInt("releaseYear");
-                    String genre = rs.getString("genre");
-                    String placement = rs.getString("placement");
+                    DVD dvd = dvdMap.get(dvdNo);
+                    if (dvd == null){
+                        String title = rs.getString("title");
+                        String director = rs.getString("director");
+                        int year = rs.getInt("releaseYear");
+                        String genre = rs.getString("genre");
+                        String placement = rs.getString("placement");
                 
-                    dvd = new DVD(dvdNo, title, director, year, genre, placement);
-                    dvdMap.put(dvdNo, dvd);
-                }
+                        dvd = new DVD(dvdNo, title, director, year, genre, placement);
+                        dvdMap.put(dvdNo, dvd);
+                    }
                 
-                int copyId = rs.getInt("dvdNo");
-                if(copyId != 0){
-                    boolean isAvailable = rs.getInt("onLoan") == 0;
+                    int copyId = rs.getInt("dvdNo");
+                    if(copyId != 0){
+                        boolean isAvailable = rs.getInt("onLoan") == 0;
                     
-                    DVDCopies copy = new DVDCopies(copyId, dvd);
-                    copy.setAvailable(isAvailable);
+                        DVDCopies copy = new DVDCopies(copyId, dvd);
+                        copy.setAvailable(isAvailable);
                     
-                    dvd.addCopy(copy);
+                        dvd.addCopy(copy);
+                    }
                 }
             }
-            
         }
         catch (SQLException e){
             e.printStackTrace();
-
         }
-        
         return new ArrayList<>(dvdMap.values()); 
-    
-    }
-    
+    }  
 }

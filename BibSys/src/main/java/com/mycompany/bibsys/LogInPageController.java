@@ -95,41 +95,37 @@ public class LogInPageController {
         }
     }
     
-    
-
-    private User validateLogin(String username, String password) throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "#Katot99")){
+    private User validateLogin(String username, String password){
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "")){
             String sql = "SELECT * FROM user WHERE email = ?"; 
             PreparedStatement stmt = connection.prepareStatement(sql); 
             stmt.setString(1, username);
             
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()){
-                String dbPassword = rs.getString("password");
-                if (dbPassword.equals(password)){
-                    return new User(
-                        rs.getInt("userID"),
-                        rs.getInt("userCategory"),
-                        rs.getString("email"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("streetName"),
-                        rs.getString("city"),
-                        rs.getString("postcode"),
-                        rs.getInt("activeLoans"),
-                        rs.getString("role"),
-                        rs.getString("password")
-                    );
-                }
-                else{
-                    showAlert("Wrong password", "Password i wrong! Please try again.");
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()){
+                    String dbPassword = rs.getString("password");
+                    if (dbPassword.equals(password)){
+                        return new User(
+                            rs.getInt("userID"),
+                            rs.getInt("userCategory"),
+                            rs.getString("email"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("streetName"),
+                            rs.getString("city"),
+                            rs.getString("postcode"),
+                            rs.getInt("activeLoans"),
+                            rs.getString("role"),
+                            rs.getString("password")
+                        );
+                    }else{
+                        showAlert("Wrong password", "Password i wrong! Please try again.");
+                    }
+                } else {
+                    showAlert("Wrong username", "Username is wrong. Your username is your emailadress. Please try again.");
                 }
             }
-            else {
-                showAlert("Wrong username", "Username is wrong. Your username is your emailadress. Please try again.");
-            }
-        }
-        catch (SQLException e){
+        }catch (SQLException e){
             e.printStackTrace();
             showAlert("Connection Failure", "Could not connect to database.");
         }

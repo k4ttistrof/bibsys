@@ -104,7 +104,7 @@ public class AddItemsController {
     public void initialize(){
         
         searchTypeChoiceBox.getItems().addAll("Book", "DVD");
-        categoryChoiceBox.getItems().addAll(1, 2, 3);
+        categoryChoiceBox.getItems().addAll(1, 2);
         genreChoiceBox.getItems().addAll("documentary", "romance", "comedy", "drama", "thriller", "horror");
 
         bookForm.setVisible(false);
