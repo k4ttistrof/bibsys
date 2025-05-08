@@ -30,6 +30,9 @@ public class DvdDetailsController {
 
     @FXML
     private Label directorLabel;
+    
+    @FXML
+    private Label dvdNrLabel;
 
     @FXML
     private Label genreLabel;
@@ -93,12 +96,12 @@ public class DvdDetailsController {
     
     public void setDvdDetails(SearchResultItem item){
         this.item = item; 
-        
         titleLabel.setText(item.getTitle());
         directorLabel.setText(item.getAuthorOrDirector());
         releaseYearLabel.setText(String.valueOf(item.getYear()));
         genreLabel.setText(item.getGenre());
         placementLabel.setText(item.getPlacement());
+        dvdNrLabel.setText(String.valueOf(item.getdvdNr()));
         isAvailableLabel.setText(item.getAvailability());
         
         borrowItemButton.setDisable(!"Available".equalsIgnoreCase(item.getAvailability()));

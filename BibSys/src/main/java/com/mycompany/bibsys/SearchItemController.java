@@ -223,7 +223,7 @@ public class SearchItemController {
                 }
                 
                 String availability = isAvailable ? "Available" : "On loan"; 
-                dvdResults.add(new SearchResultItem(dvd.getTitle(), dvd.getDirector(), dvd.getYear(), dvd.getGenre(), availability, dvd.getPlacement()));
+                dvdResults.add(new SearchResultItem(dvd.getTitle(), dvd.getDirector(), dvd.getYear(), Long.valueOf(dvd.getDvdNo()), dvd.getGenre(), availability, dvd.getPlacement()));
             }
         }
         searchResultsTable.setItems(dvdResults);

@@ -14,7 +14,7 @@ public class SearchResultItem {
     private String authorOrDirector;
     private String publisher; //null för dvder
     private Integer year;
-    private Long isbn; // Kan vara null för DVD
+    private Long isbnOrDvdNr; // Kan vara null för DVD
     private String genre; //Kan vara null för böcker
     private String availability; 
     private String placement;
@@ -25,19 +25,20 @@ public class SearchResultItem {
         this.authorOrDirector = author;
         this.publisher = publisher;
         this.year = year;
-        this.isbn = isbn;
+        this.isbnOrDvdNr = isbn;
         this.genre = null;
         this.availability = availability;
         this.placement = placement;
     }
     
     //dvder
-    public SearchResultItem(String title, String director, int year, String genre, String availability, String placement) {
+    public SearchResultItem(String title, String director, int year, 
+            Long dvdNr, String genre, String availability, String placement) {
         this.title = title;
         this.authorOrDirector = director;
         this.publisher = null; //ingen publisher
         this.year = year;
-        this.isbn = null; // inget isbn
+        this.isbnOrDvdNr = dvdNr; 
         this.genre = genre;
         this.availability = availability;
         this.placement = placement;
@@ -56,9 +57,11 @@ public class SearchResultItem {
         return year;
     }
     public Long getIsbn() {
-        return isbn;
+        return isbnOrDvdNr;
     }
-    
+    public Long getdvdNr(){
+        return isbnOrDvdNr;
+    }
     public String getGenre(){
         return genre; 
     }

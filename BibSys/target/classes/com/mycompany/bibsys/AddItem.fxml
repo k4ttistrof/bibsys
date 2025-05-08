@@ -102,8 +102,8 @@
                         <TextField fx:id="publisherTextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <TextField fx:id="publishingYearTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <TextField fx:id="bookPlacementTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <Label fx:id="bcInfoIcon" text="ⓘ" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <Label fx:id="ircInfoIcon" text="ⓘ" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Label fx:id="bcInfoIcon" focusTraversable="false" text="ⓘ" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Label fx:id="ircInfoIcon" focusTraversable="false" text="ⓘ" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                         <Label text="ISBN" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="isbnTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                         <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBookButtonPressed" text="Add Book" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />

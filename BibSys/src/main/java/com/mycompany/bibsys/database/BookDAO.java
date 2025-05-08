@@ -79,6 +79,7 @@ public class BookDAO { //DAO = Data Access Object
         }
         return new ArrayList<>(bookMap.values());
         }
+    
     public static boolean isValidISBN(String query){
         try{
             Long.parseLong(query);

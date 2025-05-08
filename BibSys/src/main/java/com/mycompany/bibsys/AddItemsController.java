@@ -20,6 +20,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 public class AddItemsController {
@@ -106,7 +107,10 @@ public class AddItemsController {
         searchTypeChoiceBox.getItems().addAll("Book", "DVD");
         categoryChoiceBox.getItems().addAll(1, 2);
         genreChoiceBox.getItems().addAll("documentary", "romance", "comedy", "drama", "thriller", "horror");
-
+        Tooltip bcToolTip = new Tooltip("Book Category 1 = all books that are NOT course literature. Book Category 2 = Course literature.");
+        Tooltip.install(bcInfoIcon, bcToolTip);
+        Tooltip ircToolTip = new Tooltip("Check the box if the book should have a reference copy that cannot be borrowed.");
+        Tooltip.install(ircInfoIcon, ircToolTip);
         bookForm.setVisible(false);
         bookForm.setManaged(false);
         dvdForm.setVisible(false);

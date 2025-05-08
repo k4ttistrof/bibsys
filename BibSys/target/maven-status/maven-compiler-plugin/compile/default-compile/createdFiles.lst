@@ -9,6 +9,7 @@ com\mycompany\bibsys\AddItemsController.class
 com\mycompany\bibsys\entity\DVDCopies.class
 com\mycompany\bibsys\entity\DVD.class
 com\mycompany\bibsys\SearchResultItem.class
+com\mycompany\bibsys\DeleteItemController.class
 com\mycompany\bibsys\SecondaryController.class
 com\mycompany\bibsys\entity\BookCopies.class
 com\mycompany\bibsys\Main.class

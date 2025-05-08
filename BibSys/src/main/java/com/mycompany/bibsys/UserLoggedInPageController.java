@@ -107,7 +107,22 @@ public class UserLoggedInPageController {
 
     @FXML
     void deleteItemButtonPressed(ActionEvent event) {
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteItem.fxml"));
+        Parent deleteRoot = loader.load();
 
+        DeleteItemController controller = loader.getController();
+
+        Stage addItemStage = new Stage();
+        addItemStage.setScene(new Scene(deleteRoot));
+        addItemStage.setTitle("Delete Items");
+        addItemStage.initModality(Modality.APPLICATION_MODAL); // Gör popupen modal (stänger inte bakomliggande fönster)
+        addItemStage.show();
+
+        } 
+        catch (Exception e) {
+        e.printStackTrace();
+        }
     }
 
 
