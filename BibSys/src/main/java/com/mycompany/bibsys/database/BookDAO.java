@@ -88,6 +88,36 @@ public class BookDAO { //DAO = Data Access Object
             return false;
         }
     }
+    
+    public static boolean deleteBookAndCopies(long isbn){
+        String deleteCopiesSql = "DELETE FROM bookcopy WHERE isbn = ?";
+        String deleteBookSql = "DELETE FROM book WHERE isbn = ?";
+        
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)){
+            connection.setAutoCommit(false);
+            try(
+                    PreparedStatement deleteCopiesStmt = connection.prepareStatement(deleteCopiesSql);
+                    PreparedStatement deleteBookStmt = connection.prepareStatement(deleteBookSql)){
+                deleteCopiesStmt.setLong(1, isbn);
+                deleteCopiesStmt.executeUpdate();
+                
+                deleteBookStmt.setLong(1, isbn);
+                int affectedRows = deleteBookStmt.executeUpdate();
+                
+                connection.commit();
+                return affectedRows > 0;
+            }
+            catch (SQLException e){
+                connection.rollback();
+                e.printStackTrace();
+                return false; 
+            }   
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
  
 }
 

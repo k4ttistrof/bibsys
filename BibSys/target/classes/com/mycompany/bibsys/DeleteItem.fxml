@@ -96,7 +96,7 @@
                         <TextField fx:id="isbnTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="170.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane fx:id="enterDvdNr" visible="false">
+                  <GridPane fx:id="enterDvdNo" visible="false">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.20001220703125" minWidth="10.0" prefWidth="112.39996337890625" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.60003662109375" minWidth="10.0" prefWidth="179.60003662109375" />
@@ -106,7 +106,7 @@
                     </rowConstraints>
                      <children>
                         <Label text="Enter DVD Number:" />
-                        <TextField fx:id="dvdNrTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="40.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="dvdNoTextField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="40.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                   <Button fx:id="okButton" mnemonicParsing="false" onAction="#okButtonPressed" text="OK" StackPane.alignment="CENTER_RIGHT" />
@@ -156,9 +156,9 @@
                         <Label text="Release Year:" GridPane.rowIndex="2" />
                         <Label text="DVD Number:" GridPane.rowIndex="3" />
                         <Label fx:id="dvdTitleLabel" text="dvdTitle" GridPane.columnIndex="1" />
-                        <Label fx:id="directorTitleLabel" text="director" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="directorLabel" text="director" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="releaseYearLabel" text="releaseYear" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="dvdNrLabel" text="dvdNr" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="dvdNoLabel" text="dvdNo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
