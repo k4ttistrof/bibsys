@@ -49,29 +49,29 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <GridPane layoutX="14.0" layoutY="36.0" prefHeight="50.0" prefWidth="528.0">
+            <GridPane fx:id="itemType" layoutX="378.0" layoutY="21.0" prefHeight="50.0" prefWidth="237.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.20001220703125" minWidth="10.0" prefWidth="96.80001220703124" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="432.79999999999995" minWidth="10.0" prefWidth="405.5999877929687" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.20001220703125" minWidth="10.0" prefWidth="74.99998779296875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="432.79999999999995" minWidth="10.0" prefWidth="140.60001220703128" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Item Type:" GridPane.halignment="LEFT">
+                  <Label text="Item Type:">
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <GridPane.margin>
-                        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+                        <Insets />
                      </GridPane.margin>
                   </Label>
-                  <ChoiceBox fx:id="searchTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ChoiceBox fx:id="searchTypeChoiceBox" prefHeight="26.0" prefWidth="156.0" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <StackPane layoutX="18.0" layoutY="83.0" prefHeight="289.0" prefWidth="596.0">
                <children>
-                  <GridPane fx:id="bookForm" prefHeight="293.0" prefWidth="595.0">
+                  <GridPane fx:id="bookForm" prefHeight="293.0" prefWidth="595.0" visible="false">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.20001220703125" minWidth="10.0" prefWidth="21.400006103515626" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.20001220703125" minWidth="10.0" prefWidth="116.79999389648438" />
@@ -142,8 +142,60 @@
                         <Button fx:id="addDvdButton" mnemonicParsing="false" onAction="#addDvdButtonPressed" text="Add DVD" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
+                  <GridPane fx:id="bookCopyForm" prefHeight="221.0" prefWidth="488.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.199951171875" minWidth="10.0" prefWidth="91.19998779296876" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="549.2000122070312" minWidth="10.0" prefWidth="504.8000122070313" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Enter ISBN: " />
+                        <TextField fx:id="bookCopyTextField" GridPane.columnIndex="1" />
+                        <Button fx:id="addBookCopyButton" mnemonicParsing="false" onAction="#addBookCopyButtonPressed" text="Add Book Copy" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="copyIsReferenceBox" mnemonicParsing="false" text="Check this box if the copy is to be a reference copy" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Is reference:" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="dvdCopyForm" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="122.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="474.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Enter DVD Number:" />
+                        <TextField fx:id="dvdCopyTextField" GridPane.columnIndex="1" />
+                        <Button fx:id="addDvdCopyButton" mnemonicParsing="false" onAction="#addDvdCopyButtonPressed" text="Add DVD Copy" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
                </children>
             </StackPane>
+            <GridPane layoutX="18.0" layoutY="21.0" prefHeight="51.0" prefWidth="370.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.39996337890625" minWidth="10.0" prefWidth="91.80001220703124" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.39996337890625" minWidth="0.9999755859375057" prefWidth="80.80001220703124" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.39996337890625" minWidth="0.0" prefWidth="24.79998779296875" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.2000366210938" minWidth="10.0" prefWidth="174.40001220703127" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="138.59998168945313" minHeight="10.0" prefHeight="49.59999694824219" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="96.0" text="Do you want to" />
+                  <Label prefHeight="18.0" prefWidth="67.0" GridPane.columnIndex="2" />
+                  <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemButtonPressed" text="Add Item" GridPane.columnIndex="1" />
+                  <Label text="or" GridPane.columnIndex="2" />
+                  <Button fx:id="addCopyButton" mnemonicParsing="false" onAction="#addCopyButtonPressed" prefHeight="26.0" text="Add Copy of Item" GridPane.columnIndex="3" />
+               </children>
+            </GridPane>
       </children>
     </AnchorPane>
   </children>

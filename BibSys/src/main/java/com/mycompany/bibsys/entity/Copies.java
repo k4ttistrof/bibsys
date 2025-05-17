@@ -8,7 +8,7 @@ package com.mycompany.bibsys.entity;
  *
  * @author katay
  */
-public abstract class Copies {
+    public abstract class Copies {
     private int barcode; 
     private boolean isAvailable;  
     

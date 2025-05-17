@@ -139,7 +139,7 @@
                         <Label fx:id="isbnLabel" text="isbn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
-                  <GridPane fx:id="dvdDetails">
+                  <GridPane fx:id="dvdDetails" visible="false">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.20001220703125" minWidth="10.0" prefWidth="91.4000244140625" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.5999755859375" minWidth="10.0" prefWidth="406.5999755859375" />
@@ -159,6 +159,38 @@
                         <Label fx:id="directorLabel" text="director" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="releaseYearLabel" text="releaseYear" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="dvdNoLabel" text="dvdNo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="bookCopyForm">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39996337890625" minWidth="10.0" prefWidth="195.2000244140625" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="302.3999755859375" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Enter Book Barcode (BookCopyID):" />
+                        <TextField fx:id="bookCopyIdTextField" GridPane.columnIndex="1" />
+                        <Button fx:id="deleteBookCopyButton" mnemonicParsing="false" onAction="#deleteBookCopyButtonPressed" text="Delete Copy" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="dvdCopyForm" visible="false">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.60003662109375" minWidth="10.0" prefWidth="164.800048828125" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.39996337890625" minWidth="10.0" prefWidth="332.799951171875" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="153.0" text="Enter DVD Barcode (DvdNo):" />
+                        <TextField fx:id="dvdCopyNoTextField" GridPane.columnIndex="1" />
+                        <Button fx:id="deleteDvdCopyButton" mnemonicParsing="false" onAction="#deleteDvdCopyButtonPressed" text="Delete Copy" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>

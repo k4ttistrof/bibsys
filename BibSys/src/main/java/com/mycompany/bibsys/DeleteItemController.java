@@ -7,7 +7,9 @@ package com.mycompany.bibsys;
 import com.mycompany.bibsys.database.BookDAO;
 import com.mycompany.bibsys.database.DVDDAO;
 import com.mycompany.bibsys.entity.Book;
+import com.mycompany.bibsys.entity.BookCopies;
 import com.mycompany.bibsys.entity.DVD;
+import com.mycompany.bibsys.entity.DVDCopies;
 import java.util.List;
 import java.util.Optional;
 import javafx.event.ActionEvent;
@@ -17,72 +19,157 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class DeleteItemController {
-
+    @FXML
+    private Button deleteBookCopyButton;
     @FXML
     private Label authorLabel;
-
+    @FXML
+    private GridPane bookCopyForm;
+    @FXML
+    private TextField bookCopyIdTextField;
     @FXML
     private GridPane bookDetails;
-
     @FXML
     private Button confirmDeleteItemButton;
-
     @FXML
-    private Button deleteCopyOfItemButton;
-
+    private Button deleteCopyOfItemButton;  
     @FXML
-    private Button deleteItemButton;
-
+    private Button deleteDvdCopyButton;
+    @FXML
+    private Button deleteItemButton;   
+    @FXML
+    private TextField dvdCopyNoTextField;
     @FXML
     private Label directorLabel;
-
+    @FXML
+    private GridPane dvdCopyForm;
     @FXML
     private GridPane dvdDetails;
-
     @FXML
     private Label dvdNoLabel;
-
     @FXML
     private TextField dvdNoTextField;
-
     @FXML
     private Label dvdTitleLabel;
-
     @FXML
     private GridPane enterDvdNo;
-
     @FXML
     private GridPane enterIsbn;
-
     @FXML
     private Label isbnLabel;
-
     @FXML
     private TextField isbnTextField;
-
     @FXML
     private ChoiceBox<String> itemTypeChoiceBox;
-    
     @FXML
     private Button okButton;
-
     @FXML
     private Label publisherLabel;
-
     @FXML
     private Label publishingYearLabel;
-
     @FXML
     private Label releaseYearLabel;
-
     @FXML
     private Label titleLabel;
     @FXML
     private GridPane typeOfItemGrid;
+    
+    private boolean isDeletingWholeItem = false;
+    
+    @FXML
+    void deleteDvdCopyButtonPressed(ActionEvent event) {
+        int copyId = Integer.parseInt(dvdCopyNoTextField.getText());
+        DVDCopies copy = DVDDAO.getDVDCopy(copyId);
+
+        if (copy == null) {
+            showAlert(Alert.AlertType.ERROR, "Something went wrong!", "DVD copy not found.");
+            return;
+        }
+
+        StringBuilder warning = new StringBuilder("You are about to delete this DVD copy:\n\n");
+        warning.append("Title: ").append(copy.getDvd().getTitle()).append("\n");
+        warning.append("Copy ID: ").append(copy.getBarcode()).append("\n");
+
+        if (!copy.isAvailable()) {
+            warning.append("\nThis copy is currently on loan!");
+        }
+
+        warning.append("\nAre you sure you want to delete this copy?");
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm deletion");
+        confirm.setHeaderText("Warning");
+
+        TextArea textArea = new TextArea(warning.toString());
+        textArea.setWrapText(true);
+        textArea.setEditable(false);
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        confirm.getDialogPane().setContent(textArea);
+
+        Optional<ButtonType> result = confirm.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean success = DVDDAO.deleteDVDCopy(copyId); 
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Deleted", "DVD copy deleted successfully.");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Something went wrong!", "DVD copy could not be deleted.");
+            }
+        }
+    }
+
+    @FXML
+    void deleteBookCopyButtonPressed(ActionEvent event) {
+        int copyId = Integer.parseInt(bookCopyIdTextField.getText());
+
+        BookCopies copy = BookDAO.getBookCopy(copyId);
+        if (copy == null){
+            showAlert(Alert.AlertType.ERROR, "Something went wrong!", "Book copy not found.");
+            return;
+        }
+
+        StringBuilder warning = new StringBuilder("You are about to delete this book copy:\n\n");
+        warning.append("Title: ").append(copy.getBookTitle()).append("\n");
+        warning.append("Copy ID: ").append(copy.getBarcode()).append("\n");
+
+        if (copy.isReference()){
+            warning.append("\nWARNING: This is a reference copy!");
+        }
+        if (!copy.isAvailable()){
+            warning.append("\nWARNING: This copy is currently on loan!");
+        }
+
+        warning.append("\nAre you sure you want to delete this copy?");
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm deletion");
+        confirm.setHeaderText("Warning");
+
+        // Skapa TextArea för att visa varningen
+        TextArea textArea = new TextArea(warning.toString());
+        textArea.setWrapText(true);       // Gör så att texten radbryts snyggt
+        textArea.setEditable(false);      // Användaren kan inte ändra texten
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+
+        // Sätt TextArea som innehåll i dialogen
+        confirm.getDialogPane().setContent(textArea);
+
+        Optional<ButtonType> result = confirm.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            boolean success = BookDAO.deleteBookCopy(copyId);
+            if(success){
+                showAlert(Alert.AlertType.INFORMATION, "Deleted", "Book copy deleted successfully.");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Something went wrong!", "Book copy could not be deleted.");
+            }
+        }
+    }
 
     @FXML
     void confirmDeleteItemPressed(ActionEvent event) {
@@ -133,33 +220,26 @@ public class DeleteItemController {
 
     @FXML
     void deleteCopyOfItemButtonPressed(ActionEvent event) {
-
+        deleteItemButton.setDisable(true);
+        typeOfItemGrid.setVisible(true);
+        typeOfItemGrid.setManaged(true);
+        
+        /*itemTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        if ("Book".equals(newVal)){
+            bookCopyForm.setVisible(true);
+                
+        } else if ("DVD".equals(newVal)){
+            dvdCopyForm.setVisible(true);  
+            }
+        }); */
     }
 
     @FXML
-    void deleteItemButtonPressed(ActionEvent event) {
+    void deleteItemButtonPressed(ActionEvent event) {   
+        isDeletingWholeItem = true; 
+        deleteCopyOfItemButton.setDisable(true);
         typeOfItemGrid.setVisible(true);
         typeOfItemGrid.setManaged(true);
-        deleteCopyOfItemButton.setDisable(true);
-        
-        itemTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if ("Book".equals(newVal)){
-                enterIsbn.setVisible(true);
-                enterIsbn.setManaged(true);
-                okButton.setVisible(true);
-                okButton.setManaged(true);
-                enterDvdNo.setVisible(false);
-                enterDvdNo.setManaged(false);
-                
-            } else if ("DVD".equals(newVal)){
-                enterDvdNo.setVisible(true);
-                enterDvdNo.setManaged(true);
-                okButton.setVisible(true);
-                okButton.setManaged(true);
-                enterIsbn.setVisible(false);
-                enterIsbn.setManaged(false);
-            }
-        });
     }
     
     @FXML
@@ -175,9 +255,47 @@ public class DeleteItemController {
         }
 
     }
-     public void initialize(){
-        
+    public void initialize(){
         itemTypeChoiceBox.getItems().addAll("Book", "DVD");
+        itemTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (isDeletingWholeItem) {//radera ett helt item + kopior
+                if ("Book".equals(newVal)) {
+                    enterIsbn.setVisible(true);
+                    enterIsbn.setManaged(true);
+                    enterDvdNo.setVisible(false);
+                    enterDvdNo.setManaged(false);
+                } else if ("DVD".equals(newVal)) {
+                    enterDvdNo.setVisible(true);
+                    enterDvdNo.setManaged(true);
+                    enterIsbn.setVisible(false);
+                    enterIsbn.setManaged(false);
+                }
+                okButton.setVisible(true);
+                okButton.setManaged(true);
+                bookCopyForm.setVisible(false);
+                bookCopyForm.setManaged(false);
+                dvdCopyForm.setVisible(false);
+                dvdCopyForm.setManaged(false);
+                } else { //radera kopia
+                    if ("Book".equals(newVal)) {
+                        bookCopyForm.setVisible(true);
+                        bookCopyForm.setManaged(true);
+                        dvdCopyForm.setVisible(false);
+                        dvdCopyForm.setManaged(false);
+                    } else if ("DVD".equals(newVal)) {
+                        dvdCopyForm.setVisible(true);
+                        dvdCopyForm.setManaged(true);
+                        bookCopyForm.setVisible(false);
+                        bookCopyForm.setManaged(false);
+                    }
+                    enterIsbn.setVisible(false);
+                    enterIsbn.setManaged(false);
+                    enterDvdNo.setVisible(false);
+                    enterDvdNo.setManaged(false);
+                    okButton.setVisible(false);
+                    okButton.setManaged(false);
+                }
+        });
 
         typeOfItemGrid.setVisible(false);
         typeOfItemGrid.setManaged(false);
@@ -193,6 +311,10 @@ public class DeleteItemController {
         dvdDetails.setManaged(false);
         confirmDeleteItemButton.setVisible(false);
         confirmDeleteItemButton.setManaged(false);
+        bookCopyForm.setVisible(false);
+        bookCopyForm.setManaged(false);
+        dvdCopyForm.setVisible(false);
+        dvdCopyForm.setManaged(false);
     }
 
     private void findBook() {
@@ -284,5 +406,4 @@ public class DeleteItemController {
         confirmDeleteItemButton.setVisible(false);
         confirmDeleteItemButton.setManaged(false);
     }
-
 }
