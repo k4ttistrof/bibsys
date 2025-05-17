@@ -96,7 +96,7 @@ public class LogInPageController {
     }
     
     private User validateLogin(String username, String password){
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "#Katot99")){
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bbd", "root", "")){
             String sql = "SELECT * FROM user WHERE email = ?"; 
             PreparedStatement stmt = connection.prepareStatement(sql); 
             stmt.setString(1, username);
