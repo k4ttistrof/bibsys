@@ -179,6 +179,11 @@ public class DeleteItemController {
             long isbn = Long.parseLong(isbnLabel.getText());
             String title = titleLabel.getText();
             
+            if (BookDAO.hasLoanedCopies(isbn)) {
+                showAlert(Alert.AlertType.WARNING, "Cannot delete Book", "The book '" + title + "' has one or more copies currently on loan and cannot be deleted.");
+                return;
+            }
+            
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Confirm deletion");
             confirm.setHeaderText("You are about to delete a book from the database");
@@ -199,6 +204,10 @@ public class DeleteItemController {
             int dvdNo = Integer.parseInt(dvdNoLabel.getText());
             String title = dvdTitleLabel.getText();
             
+            if (DVDDAO.hasLoanedCopies(dvdNo)) {
+                showAlert(Alert.AlertType.WARNING, "Cannot delete DVD", "One or more copies of '" + title + "' are currently on loan and cannot be deleted.");
+                return;
+            }
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Confirm deletion");
             confirm.setHeaderText("You are about to delete a DVD from the database");

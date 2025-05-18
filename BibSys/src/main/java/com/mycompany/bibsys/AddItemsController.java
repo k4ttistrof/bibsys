@@ -178,7 +178,12 @@ public class AddItemsController {
             showAlert(Alert.AlertType.ERROR, "Input Incorrect!", "Year, ISBN and Number of Copies must be numbers!");
             return;
         }
-
+        
+        if (BookDAO.bookExists(isbnLong)) {
+            showAlert(Alert.AlertType.ERROR, "Book Already Exists", "A book with this ISBN already exists in the database.");
+            return;
+        }
+        
         boolean success = BookDAO.addBookWithCopies(isbnLong, title, author, publisher, yearInt, category, placement, nrOfCopies, isReference);
 
         if (success) {

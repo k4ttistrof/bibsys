@@ -88,7 +88,27 @@ public class BookDAO { //DAO = Data Access Object
             return false;
         }
     }
-    
+    public static boolean hasLoanedCopies(long isbn) {
+        String sql = "SELECT COUNT(*) FROM bookcopy WHERE isbn = ? AND onLoan = 1";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setLong(1, isbn);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false; 
+    }
+
+
     public static boolean deleteBookAndCopies(long isbn){
         String deleteCopiesSql = "DELETE FROM bookcopy WHERE isbn = ?";
         String deleteBookSql = "DELETE FROM book WHERE isbn = ?";
@@ -187,6 +207,20 @@ public class BookDAO { //DAO = Data Access Object
         return null;
     }
     
+    public static boolean bookExists(long isbn) {
+        String sql = "SELECT 1 FROM book WHERE isbn = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, isbn);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next(); // true om det finns en rad
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; 
+        }
+    }
+
     public static boolean addBookWithCopies(long isbn, String title, String author, String publisher,
                                         int year, int category, String placement, int nrOfCopies, boolean isReferenceCopy) {
         String insertBookSQL = "INSERT INTO book (ISBN, title, author, publisher, publishingYear, bookCategory, placement) VALUES (?, ?, ?, ?, ?, ?, ?)";

@@ -116,7 +116,26 @@ public class DVDDAO {
         return new ArrayList<>(dvdMap.values());
     }
 
-    
+    public static boolean hasLoanedCopies(int dvdNo) {
+        String sql = "SELECT COUNT(*) FROM dvdcopy WHERE dvdNo = ? AND onLoan = 1";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, dvdNo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public static boolean deleteDvdAndCopies(int dvdNo){
         String deleteCopiesSql = "DELETE FROM dvdCopy WHERE dvdNo = ?";
         String deleteDvdSql = "DELETE FROM dvd WHERE dvdNo = ?";
@@ -212,7 +231,7 @@ public class DVDDAO {
         }
         return null;
     }
-    
+
     public static boolean addDvdWithCopies(String title, String director, int releaseYear, String genre, String placement, int nrOfCopies) {
         String insertDvdSQL = "INSERT INTO dvd (title, director, releaseYear, genre, loanTime, placement) VALUES (?, ?, ?, ?, ?, ?)";
         String insertCopySQL = "INSERT INTO dvdcopy (dvdNo, title, onLoan) VALUES (?, ?, 0)";
